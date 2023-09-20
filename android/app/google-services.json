@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "116066524945",
+    "project_id": "yoaradio-cd6ba",
+    "storage_bucket": "yoaradio-cd6ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116066524945:android:ba42170fc558c1305236b0",
+        "android_client_info": {
+          "package_name": "app.yoaradio.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116066524945-uq6rr4marnv5ncj5160jribd9nub7lqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6HCv7pu6yzDQGmjkQ72TsCVoZ8fGGGyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116066524945-uq6rr4marnv5ncj5160jribd9nub7lqa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

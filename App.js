@@ -1,20 +1,62 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import OneSignal from 'react-native-onesignal';
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { AppRegistry } from 'react-native';
+import { useKeepAwake } from 'expo-keep-awake';
+import { getApps, initializeApp } from '@react-native-firebase/app';
+import firebaseConfig from './firebaseConfig';
+import * as Notifications from 'expo-notifications';
 
-export default function App() {
+
+import HomeScreen from './screens/HomeScreen';
+import RadioScreen from './screens/Radio';
+import SettingsScreen from './screens/SettingsScreen';
+
+const tabIcon = {
+  Home: 'home',
+  Radio: 'radio',
+  Settings: 'settings',
+};
+
+
+const Tab = createBottomTabNavigator();
+const App = () => {
+  useEffect(() => {
+    const requestNotificationPermissions = async () => {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Notification permissions denied');
+      }
+    };
+    requestNotificationPermissions();
+  }, []);
+  if (!getApps().length) {
+    initializeApp(firebaseConfig);
+  }
+  OneSignal.setAppId('56e8d381-3c63-471a-ba7b-bf9a691f7321');
+  AppRegistry.registerComponent('Main', () => App);
+  useKeepAwake();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            // Get the icon name based on the route name
+            const iconName = tabIcon[route.name];
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+            // Return the Ionicons component with the appropriate icon name
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Radio" component={RadioScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
