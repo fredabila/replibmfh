@@ -12,8 +12,8 @@ workflows:
         bundle_identifier: app.yoaradio.new
       vars:
         BUNDLE_ID: app.yoaradio.new
-        XCODE_WORKSPACE: "yoaradio.xcworkspace" # <-- Put the name of your Xcode workspace here
-        XCODE_SCHEME: "yoaradio" # <-- Put the name of your Xcode scheme here
+        XCODE_WORKSPACE: "replib.xcworkspace" # <-- Put the name of your Xcode workspace here
+        XCODE_SCHEME: "replib" # <-- Put the name of your Xcode scheme here
         APP_STORE_APPLE_ID: 6467079884
       xcode: latest
       cocoapods: default
@@ -31,7 +31,7 @@ workflows:
       - name: Build ipa for distribution
         script: | 
           xcode-project build-ipa \
-            --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+            --project "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
