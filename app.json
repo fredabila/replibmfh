@@ -19,7 +19,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "app.yoaradio.new",
       "googleServicesFile": "./GoogleService-Info.plist",
-      "buildNumber": "2"
+      "buildNumber": "5"
     },
     "android": {
       "adaptiveIcon": {
