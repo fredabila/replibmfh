@@ -2,7 +2,7 @@
   "expo": {
     "name": "YOARADIO",
     "slug": "replib",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/church-logo.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "app.yoaradio.new",
       "googleServicesFile": "./GoogleService-Info.plist",
-      "buildNumber": "5"
+      "buildNumber": "6"
     },
     "android": {
       "adaptiveIcon": {

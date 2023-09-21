@@ -36,7 +36,8 @@
         "appleId": "abilafred@icloud.com",
         "ascApiKeyId": "9K6GM7264N",
         "ascApiKeyIssuerId": "0f783ffc-1906-4fa2-b3b4-2f23b4c9a31d",
-        "ascApiKeyPath": "./AuthKey_9K6GM7264N.p8"
+        "ascApiKeyPath": "./AuthKey_9K6GM7264N.p8",
+        "ascAppId": "6467079884"
       }
     }
   }
