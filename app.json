@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "YOARADIO",
-    "slug": "replib",
+    "slug": "replibmfh",
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/church-logo.png",
@@ -33,7 +33,7 @@
       ],
       "package": "app.yoaradio.com",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 8
+      "versionCode": 14
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
@@ -54,12 +54,11 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "6feac33f-8453-4c48-9f45-928d2f68a456"
+        "projectId": "5e467efd-cc10-43cf-930b-99c5b6c786c9"
       }
     },
     "updates": {
       "url": "https://u.expo.dev/5e467efd-cc10-43cf-930b-99c5b6c786c9"
-    },
-    "owner": "fredabila"
+    }
   }
 }

@@ -5,7 +5,6 @@ import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { v4 as uuidv4 } from 'uuid';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
-import { useNavigation } from '@react-navigation/native';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -18,38 +17,9 @@ const PowerPoint = () => {
     const [lastMessageTime, setLastMessageTime] = useState(null);
     const [messageCount, setMessageCount] = useState(0);
     const [showTypingLoader, setShowTypingLoader] = useState(false);
-    const [imagely, setImage] = useState(null);
     const [chatHistory, setChatHistory] = useState("");
     const [audiouri, setAudioURI] = useState(null);
-    const [dialogue, setDialogue] = useState('');
-    const [textInput1, setTextInput1] = useState('Charles');
-    const [textInput2, setTextInput2] = useState('Christianity');
-    const [age, setAge] = useState('19');
-    const [studying, setStudying] = useState("Art (Languages) student");
-    const [extras, setExtras] = useState('');
-    const navigation = useNavigation();
 
-
-    const handleAvatarPress = (user) => {
-        if (user._id === 2) {
-            // Assuming user._id 2 represents Charles
-            navigation.navigate('UserProfile', { user_id: '7999' }); // Replace with your screen name
-        }
-    };
-
-
-    const handleModalClose = () => {
-        setModalVisible(false);
-    };
-
-    const handleSave = () => {
-        // Perform save logic here
-        console.log('Text Input 1:', textInput1);
-        console.log('Text Input 2:', textInput2);
-
-        // Close the modal
-        handleModalClose();
-    };
 
 
     const SpeechServiceScreen = ({ showTypingLoader }) => {
@@ -58,11 +28,6 @@ const PowerPoint = () => {
         const scaleValue = useRef(new Animated.Value(1)).current;
         const [recordingInstance, setRecordingInstance] = useState(null);
         const textColor = 'green'
-        const animationSize = 0.6 * windowWidth;
-        const buttonSize = 0.1 * windowWidth;
-        const buttonTextSize = 0.04 * windowWidth;
-        const cardPadding = 0.02 * windowWidth;
-        const durationTextSize = 0.04 * windowWidth;
         const startRecording = async () => {
             try {
                 await Audio.requestPermissionsAsync();
@@ -228,7 +193,7 @@ const PowerPoint = () => {
         setShowTypingLoader(true);
         const formData = new FormData()
         formData.append('file', { uri: audioFileUri, name: 'audio.mp3', type: 'audio/mp3' });
-        formData.append('prompt', 'A conversation between an AI human simulation called Charles and the user');
+        formData.append('prompt', 'A conversation between a faith AI');
         try {
             // Step 1: Upload the audio file
             const uploadResponse = await fetch('https://northcentralus.api.cognitive.microsoft.com/openai/deployments/buzzchatstt/audio/transcriptions?api-version=2023-09-01-preview', {
@@ -255,23 +220,7 @@ const PowerPoint = () => {
 
 
 
-    const renderRecordingButton = () => {
-        if (isRecording) {
-            return (
-                <TouchableOpacity style={styles.recordButton} onPress={stopRecording}>
-                    <Text style={styles.recordButtonText}>Stop Recording</Text>
-                </TouchableOpacity>
-            );
-        }
-
-        return (
-            <TouchableOpacity style={styles.recordButton} onPress={startRecording}>
-                <Text style={styles.recordButtonText}>Record</Text>
-            </TouchableOpacity>
-        );
-    };
-
-
+  
     const renderChatbotBubble = (props) => {
         const { currentMessage } = props;
 
@@ -332,7 +281,7 @@ const PowerPoint = () => {
                     GiftedChat.append(previousMessages, [
                         {
                             _id: 1,
-                            text: 'Hello! I am Charles',
+                            text: 'How great is your faith?',
                             createdAt: new Date(),
                             system: true,
                         },
@@ -523,7 +472,7 @@ const PowerPoint = () => {
                                                   "You help improve the faith of Christians and help them build a better relationship with God by providing cleaer concept and explanations and referencing the bible.",
                             },
                           },
-            }, \nChatHistory:${context} \nMe: ${text} \nCharles:`,
+            }, \nChatHistory:${context} \nMe: ${text} \nMy Faith:`,
                         temperature: 0.7,
                         max_tokens: 200,
                         frequency_penalty: 0.3,
@@ -538,7 +487,7 @@ const PowerPoint = () => {
                 prevHistory => prevHistory + `{ role: 'me', content: ${text} }`
             );
             setChatHistory(
-                prevHistory => prevHistory + `{ role: 'charles', content: ${reply} }`
+                prevHistory => prevHistory + `{ role: 'myfaith', content: ${reply} }`
             );
 
             // Update the message count and last message time
@@ -570,7 +519,7 @@ const PowerPoint = () => {
                         createdAt: new Date(),
                         user: {
                             _id: 2,
-                            name: 'Charles',
+                            name: 'My Faith',
                             avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
                         },
                     },
@@ -632,7 +581,7 @@ const PowerPoint = () => {
                                     "You help improve the faith of Christians and help them build a better relationship with God by providing cleaer concept and explanations and referencing the bible.",
               },
             },
-            \nTime: ${time} \nChatHistory:${context} \nMe: ${text} \nCharles:`,
+            \nTime: ${time} \nChatHistory:${context} \nMe: ${text} \nMy Faith:`,
                         temperature: 0.7,
                         max_tokens: 200,
                         frequency_penalty: 0.3,
@@ -650,7 +599,7 @@ const PowerPoint = () => {
                 prevHistory => prevHistory + `{ role: 'user', content: ${text} }`
             );
             setChatHistory(
-                prevHistory => prevHistory + `{ role: 'charles', content: ${reply} }`
+                prevHistory => prevHistory + `{ role: 'myfaith', content: ${reply} }`
             );
 
             setMessageCount((count) => count + 1);
@@ -732,7 +681,7 @@ const PowerPoint = () => {
             </View>
             {
                 loading ? (
-                    <ActivityIndicator size="large" color={'black'} />
+                    <ActivityIndicator size="large" color="black" />
                 ) : (
                     <View style={{ flex: 1 }} >
                         {!voice ? (
@@ -745,7 +694,6 @@ const PowerPoint = () => {
                                 renderBubble={renderUserBubble}
                                 renderSystemMessage={() => null}
                                 renderChatbotBubble={renderChatbotBubble}
-                                onPressAvatar={handleAvatarPress}
                             />
                         ) : (
                             <SpeechServiceScreen showTypingLoader={showTypingLoader} />
@@ -791,7 +739,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.primary,
+        backgroundColor: 'white',
         borderRadius: 20,
         paddingVertical: 10,
         marginRight: 10,

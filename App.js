@@ -9,9 +9,8 @@ import { useKeepAwake } from 'expo-keep-awake';
 import { getApps, initializeApp } from '@react-native-firebase/app';
 import firebaseConfig from './firebaseConfig';
 import * as Notifications from 'expo-notifications';
+
 import PowerPoint from './screens/AIBuildup';
-
-
 import HomeScreen from './screens/HomeScreen';
 import RadioScreen from './screens/Radio';
 import SettingsScreen from './screens/SettingsScreen';

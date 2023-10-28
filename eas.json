@@ -11,13 +11,15 @@
       },
       "android": {
         "image": "ubuntu-18.04-jdk-11-ndk-r19c"
-      }
+      },
+      "channel": "development"
     },
     "preview": {
       "distribution": "internal",
       "ios": {
         "resourceClass": "m1-medium"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
       "autoIncrement": true,
@@ -26,7 +28,8 @@
       },
       "android": {
         "buildType": "app-bundle"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {
