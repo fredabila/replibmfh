@@ -33,7 +33,7 @@
       ],
       "package": "app.yoaradio.com",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 4
+      "versionCode": 8
     },
     "runtimeVersion": {
       "policy": "sdkVersion"

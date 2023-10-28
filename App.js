@@ -8,6 +8,7 @@ import { useKeepAwake } from 'expo-keep-awake';
 import { getApps, initializeApp } from '@react-native-firebase/app';
 import firebaseConfig from './firebaseConfig';
 import * as Notifications from 'expo-notifications';
+import PowerPoint from './screens/AIBuildup';
 
 
 import HomeScreen from './screens/HomeScreen';
@@ -18,6 +19,7 @@ const tabIcon = {
   Home: 'home',
   Radio: 'radio',
   Settings: 'settings',
+  Chat: 'chatbox',
 };
 
 
@@ -53,6 +55,7 @@ const App = () => {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Radio" component={RadioScreen} />
+        <Tab.Screen name="Chat" component={PowerPoint} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
