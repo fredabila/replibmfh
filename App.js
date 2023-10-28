@@ -1,6 +1,7 @@
 import OneSignal from 'react-native-onesignal';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import * as Updates from 'expo-updates';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { AppRegistry } from 'react-native';
@@ -25,6 +26,20 @@ const tabIcon = {
 
 const Tab = createBottomTabNavigator();
 const App = () => {
+  useEffect(() => {
+    async function checkForUpdates() {
+      try {
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          Updates.reloadAsync();
+        }
+      } catch (error) {
+        console.error('Error checking for updates', error);
+      }
+    }
+    checkForUpdates();
+  }, []);
   useEffect(() => {
     const requestNotificationPermissions = async () => {
       const { status } = await Notifications.requestPermissionsAsync();
