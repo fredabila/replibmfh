@@ -1,4 +1,4 @@
-import OneSignal from 'react-native-onesignal';
+import { OneSignal } from 'react-native-onesignal';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
@@ -51,7 +51,7 @@ const App = () => {
   if (!getApps().length) {
     initializeApp(firebaseConfig);
   }
-  OneSignal.setAppId('56e8d381-3c63-471a-ba7b-bf9a691f7321');
+  OneSignal.initialize('56e8d381-3c63-471a-ba7b-bf9a691f7321');
   AppRegistry.registerComponent('Main', () => App);
   useKeepAwake();
   return (

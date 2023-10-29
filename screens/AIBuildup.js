@@ -7,10 +7,12 @@ import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 
 
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const PowerPoint = () => {
     const [speechToText, setSpeechToText] = useState('');
+    const [trans, setrans] = useState('')
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [voice, setvoice] = useState(false);
@@ -113,7 +115,8 @@ const PowerPoint = () => {
         }, [isRecording]);
 
         return (
-            <ImageBackground source={{ uri: "https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif" }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            <ImageBackground source={{ uri: "https://i.pinimg.com/originals/42/78/76/42787621ed6d40f0c30f0ae423fc572c.gif" }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                <SpeechBubble text={trans} />
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
                     {showTypingLoader && !isRecording && (
@@ -187,6 +190,18 @@ const PowerPoint = () => {
         );
     };
 
+    const SpeechBubble = ({ text }) => {
+        return (
+            <View style={styles.containero}>
+                <View style={styles.bubble}>
+                    <Text style={styles.text}>{text}</Text>
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
+            </View>
+        );
+    };
+
 
 
     const convertSpeechToText = async (audioFileUri) => {
@@ -208,6 +223,7 @@ const PowerPoint = () => {
             const uploadData = await uploadResponse.json();
             console.log(uploadData);
             const transcript = uploadData.text
+            setrans(transcript);
             console.log(transcript)
             setShowTypingLoader(false);
             generateTextBasedResponse(transcript);
@@ -220,7 +236,7 @@ const PowerPoint = () => {
 
 
 
-  
+
     const renderChatbotBubble = (props) => {
         const { currentMessage } = props;
 
@@ -277,16 +293,6 @@ const PowerPoint = () => {
     useEffect(() => {
         NetInfo.fetch().then((state) => {
             if (state.isConnected) {
-                setMessages((previousMessages) =>
-                    GiftedChat.append(previousMessages, [
-                        {
-                            _id: 1,
-                            text: 'How great is your faith?',
-                            createdAt: new Date(),
-                            system: true,
-                        },
-                    ])
-                );
             } else {
                 alert('No internet connection. Try again later');
             }
@@ -305,7 +311,7 @@ const PowerPoint = () => {
                         user: {
                             _id: 1,
                             avatar:
-                                'https://cdn.dribbble.com/users/1077075/screenshots/10945047/media/70cd58ac294ac9e45e55913702df2472.png?compress=1&resize=400x300&vertical=top',
+                                'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg',
                         },
                     },
                 ])
@@ -318,8 +324,8 @@ const PowerPoint = () => {
                         text: '',
                         user: {
                             _id: 2,
-                            name: 'My Faith',
-                            avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                            name: 'Kairos',
+                            avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                         },
                         typing: true, // Display typing indicator before the response
                     },
@@ -369,8 +375,8 @@ const PowerPoint = () => {
                             createdAt: new Date(),
                             user: {
                                 _id: 2,
-                                name: 'My Faith',
-                                avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                                name: 'Kairos',
+                                avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                             },
                         },
                     ])
@@ -381,21 +387,6 @@ const PowerPoint = () => {
             console.error('Error generating image:', error);
         }
     };
-    const onPlaybackStatusUpdate = (status) => {
-        if (status.isLoaded) {
-            if (status.isPlaying) {
-                // Audio is currently playing
-                console.log('Audio is playing');
-            } else {
-                // Audio playback has stopped or paused
-                console.log('Audio playback stopped');
-            }
-        } else {
-            // An error occurred during audio playback
-            console.log('Error playing audio:', status.error);
-        }
-    };
-
 
     const convertTextToSpeech = async (reply) => {
         const url = 'https://eastus2.tts.speech.microsoft.com/cognitiveservices/v1';
@@ -406,7 +397,7 @@ const PowerPoint = () => {
                 'Ocp-Apim-Subscription-Key': '617dd13ee5fb4d35939ab6af28372bf4',
                 'X-Microsoft-OutputFormat': 'riff-24khz-16bit-mono-pcm',
             },
-            body: `<speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="en-US"><voice name="en-US-DavisNeural">${reply}</voice></speak>`,
+            body: `<speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="en-US"><voice name="en-US-AndrewNeural">${reply}</voice></speak>`,
         };
 
         try {
@@ -445,15 +436,14 @@ const PowerPoint = () => {
                         text: '',
                         user: {
                             _id: 2,
-                            name: 'My Faith',
-                            avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                            name: 'Kairos',
+                            avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                         },
                         typing: true,
                     },
                 ])
             );
 
-            // Set showTypingLoader to true to display the typing loader
             setShowTypingLoader(true);
             const response = await fetch(
                 'https://buzzgpt.openai.azure.com/openai/deployments/text-davinci-003/completions?api-version=2022-12-01',
@@ -465,14 +455,14 @@ const PowerPoint = () => {
                     },
                     body: JSON.stringify({
                         prompt: `This is your personality: {
-                            "name": My Faith(Christian Faith Guide - A path to dsicvoering oneself as a true Christian),
+                            "name": Kairos(Christian Faith Guide - A path to dsicvoering oneself as a true Christian),
                             "strict_requirements": {
                               "You help Christians discover their faith and also draw closer to Christ. ",
                                 "You provide cleaer concepts into explaining christian faith and helping Christians understand the bible in a much better way ",
                                                   "You help improve the faith of Christians and help them build a better relationship with God by providing cleaer concept and explanations and referencing the bible.",
                             },
                           },
-            }, \nChatHistory:${context} \nMe: ${text} \nMy Faith:`,
+            }, \nChatHistory:${context} \nMe: ${text} \nKairos:`,
                         temperature: 0.7,
                         max_tokens: 200,
                         frequency_penalty: 0.3,
@@ -487,7 +477,7 @@ const PowerPoint = () => {
                 prevHistory => prevHistory + `{ role: 'me', content: ${text} }`
             );
             setChatHistory(
-                prevHistory => prevHistory + `{ role: 'myfaith', content: ${reply} }`
+                prevHistory => prevHistory + `{ role: 'kairos', content: ${reply} }`
             );
 
             // Update the message count and last message time
@@ -503,8 +493,8 @@ const PowerPoint = () => {
                         createdAt: new Date(),
                         user: {
                             _id: 2,
-                            name: 'My Faith',
-                            avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                            name: 'Kairos',
+                            avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                         },
                     },
                 ])
@@ -519,8 +509,8 @@ const PowerPoint = () => {
                         createdAt: new Date(),
                         user: {
                             _id: 2,
-                            name: 'My Faith',
-                            avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                            name: 'Kairos',
+                            avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                         },
                     },
                 ])
@@ -554,8 +544,8 @@ const PowerPoint = () => {
                         text: '',
                         user: {
                             _id: 2,
-                            name: 'My Faith',
-                            avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                            name: 'Kairos',
+                            avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                         },
                         typing: true, // Display typing indicator before the response
                     },
@@ -574,14 +564,22 @@ const PowerPoint = () => {
                     },
                     body: JSON.stringify({
                         prompt: `This is your personality: {
-              "name": My Faith(Christian Faith Guide - A path to dsicvoering oneself as a true Christian),
+              "name": Kairos(Christian Faith Guide - A path to discovering oneself as a true Christian),
               "strict_requirements": {
-                "You help Christians discover their faith and also draw closer to Christ. ",
-                  "You provide cleaer concepts into explaining christian faith and helping Christians understand the bible in a much better way ",
-                                    "You help improve the faith of Christians and help them build a better relationship with God by providing cleaer concept and explanations and referencing the bible.",
+                "You help Christians discover their faith and also draw closer to Christ. You also serve as a general Christian assistant to help guide them through their period of Christianity to avoid their sinful nature",
+                "You provide clear concepts into explaining christian faith and helping Christians understand the bible in a much better way ",
+                "You help improve the faith of Christians and help them build a better relationship with God by providing cleaer concept and explanations and referencing the bible.",
               },
+              "helpful_tactics":{
+                "Try backing each response with a bible scripture to help the user understand the insipration served from your responses",
+                "Never rebuke the word of God in any response. Train yourself with the nature Jesus portrayed during his time spent on earth. Serve yourself as a virtual prophet to preach the gospel",
+                "Always try to serve your answers from the Chrisstian point of view but you can sometimes contradict your responses to test the Christian faith like Jesus did"
+              },
+              "qustionnaires":{
+                "You can hold random questionnaires or surveys to test the users knowledge on issues relating to the bible and serve as a tacher to help them understand those areas better"
+              }
             },
-            \nTime: ${time} \nChatHistory:${context} \nMe: ${text} \nMy Faith:`,
+            \nTime: ${time} \nChatHistory:${context} \nMe: ${text} \nKairos:`,
                         temperature: 0.7,
                         max_tokens: 200,
                         frequency_penalty: 0.3,
@@ -599,7 +597,7 @@ const PowerPoint = () => {
                 prevHistory => prevHistory + `{ role: 'user', content: ${text} }`
             );
             setChatHistory(
-                prevHistory => prevHistory + `{ role: 'myfaith', content: ${reply} }`
+                prevHistory => prevHistory + `{ role: 'kairos', content: ${reply} }`
             );
 
             setMessageCount((count) => count + 1);
@@ -614,8 +612,8 @@ const PowerPoint = () => {
                         createdAt: new Date(),
                         user: {
                             _id: 2,
-                            name: 'My Faith',
-                            avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                            name: 'Kairos',
+                            avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                         },
                     },
                 ])
@@ -630,8 +628,8 @@ const PowerPoint = () => {
                         createdAt: new Date(),
                         user: {
                             _id: 2,
-                            name: 'My Faith',
-                            avatar: 'https://cdn.dribbble.com/users/2968360/screenshots/7533259/media/7478dd112dac2a281650c204d0966109.gif'
+                            name: 'Kairos',
+                            avatar: 'https://i.pinimg.com/originals/a5/99/23/a59923e67250280a827086a0c01846c4.jpg'
                         },
                     },
                 ])
@@ -670,7 +668,7 @@ const PowerPoint = () => {
         <View style={[styles.container, { backgroundColor: 'white' }]}>
             <View style={styles.header}>
                 <Text style={{ fontSize: 16, fontWeight: "bold", marginRight: 10, color: "white" }}>
-                    Speak To
+                    Voice Mode
                 </Text>
                 <Switch
                     value={voice}
@@ -827,16 +825,53 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: 'black',
         borderRadius: 15,
-        padding: 22,
+        padding: 15,
         margin: 15,
         alignItems: 'center',
         position: 'absolute',
         top: 20
     },
     durationText: {
-        fontSize: 18,
+        fontSize: 15,
     },
-
+    containero: {
+        alignItems: 'flex-end',
+        marginBottom: 10,
+        marginRight: 10,
+        marginTop: 15
+    },
+    bubble: {
+        backgroundColor: '#3777F0',
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 3,
+        borderBottomColor: 'red',
+        borderBottomWidth: 2,
+        borderLeftColor: 'red',
+        borderLeftWidth: 2,
+        padding: 10,
+        maxWidth: 200,
+    },
+    text: {
+        color: 'white',
+    },
+    arrowBorder: {
+        backgroundColor: 'transparent',
+        borderWidth: 8,
+        borderColor: 'transparent',
+        borderTopColor: '#3777F0',
+        alignSelf: 'center',
+        marginTop: -16,
+    },
+    arrow: {
+        backgroundColor: 'transparent',
+        borderWidth: 8,
+        borderColor: 'transparent',
+        borderTopColor: 'white',
+        alignSelf: 'center',
+        marginTop: -16,
+    },
 });
 
 export default PowerPoint;
